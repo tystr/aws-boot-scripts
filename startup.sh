@@ -101,4 +101,4 @@ done
 
 # Finaly, set hostname as "Name" tag
 instance_id=`$EC2_METADATA -i | awk '{ print $2 }'`
-aws ec2 create-tags --region=us-east-1 --resources=$instance_id --tags Key=Name,Value=$hostname
+aws ec2 create-tags --region=$AWS_REGION --resources=$instance_id --tags Key=Name,Value=$hostname

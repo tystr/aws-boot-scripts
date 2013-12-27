@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# chkconfig: 2345 10 1
+# description: Invokes /usr/sbin/shutdown.sh which removes CNAMES from 
+# Route53 and deactives the node in puppet
+#              
+
+. /etc/init.d/functions
+scriptname=`basename $0`
+lockfile=/var/lock/subsys/$scriptname
+
+case "$1" in
+    start)
+        touch $lockfile
+        ;;
+    stop)
+        /usr/sbin/shutdown.sh 1> /tmp/shutdown.out 2>&1
+        rm -f $lockfile
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
